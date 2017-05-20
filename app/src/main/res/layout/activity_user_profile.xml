@@ -7,23 +7,53 @@
     android:weightSum="1"
     tools:context="com.client.vk.roma.vkclient.userprofile.view.UserProfileActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loadding_fragment"
+        android:background="@color/vk_white"
+        android:visibility="visible"
+        android:translationZ="10dp">
+
+        <ProgressBar
+            android:layout_centerInParent="true"
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/photo_profile_imageView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/name_profile_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/photo_profile_imageView" />
+        android:textSize="30sp"
+        android:layout_marginLeft="@dimen/marginLeftUserProfile"
+        android:translationZ="1dp"
+        android:layout_marginTop="183dp" />
+
+    <TextView
+        android:id="@+id/is_online_profile_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_profile_textView"
+        android:layout_marginLeft="@dimen/marginLeftUserProfile"
+        android:layout_marginTop="2dp"
+        android:translationZ="1dp"
+        android:hint="онлайн" />
 
     <TextView
         android:id="@+id/status_profile_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/name_profile_textView"
+        android:layout_below="@id/photo_profile_imageView"
+        android:layout_marginLeft="@dimen/marginLeftUserProfile"
         android:hint="Жизнь приговор вор мажо" />
 
     <TextView
@@ -31,6 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/status_profile_textView"
+        android:layout_marginLeft="@dimen/marginLeftUserProfile"
         android:hint="48 друзе" />
 
     <TextView
@@ -38,13 +69,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/count_profile_friends_textView"
+        android:layout_marginLeft="@dimen/marginLeftUserProfile"
         android:hint="185 подписчико" />
 
     <TextView
-        android:id="@+id/study_profile_textView"
+        android:id="@+id/university_profile_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/count_profile_subscribers_textView"
-        />
+        android:layout_marginLeft="@dimen/marginLeftUserProfile" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:background="@color/vk_light_color"
+        android:layout_below="@id/university_profile_textView"
+        android:id="@+id/list_of_photos"
+        android:scrollbarThumbHorizontal="@color/vk_black"
+        android:layout_height="150dp"
+        android:layout_width="match_parent"/>
 
 </RelativeLayout>

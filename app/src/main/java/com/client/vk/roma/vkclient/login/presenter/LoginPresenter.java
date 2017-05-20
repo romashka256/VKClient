@@ -9,7 +9,7 @@ import com.vk.sdk.VKSdk;
  * Created by Roma on 10.05.2017.
  */
 
-public class LoginPresenter implements ILoginPresenter,IOnLoginFinishedListener {
+public class LoginPresenter implements ILoginPresenter, IOnLoginFinishedListener {
 
     private ILoginView view;
 
@@ -19,12 +19,12 @@ public class LoginPresenter implements ILoginPresenter,IOnLoginFinishedListener 
 
     @Override
     public void loginAttempt(Context context, Activity activity, String... scope) {
-       // if(VKSdk.isLoggedIn()){
-      //     VKSdk.wakeUpSession(context);
-       //     onLoginSucess();
-        // }else{
-            VKSdk.login(activity,scope);
-       // }
+        if (VKSdk.isLoggedIn()) {
+            VKSdk.wakeUpSession(context);
+            onLoginSucess();
+        } else {
+            VKSdk.login(activity, scope);
+        }
     }
 
     @Override

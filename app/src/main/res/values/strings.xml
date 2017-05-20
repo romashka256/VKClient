@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">VkClient</string>
+    <string name="followers_count_string">подписчиков</string>
+    <string name="getFriends_count">друзей</string>
     <integer name="com_vk_sdk_AppId">6019401</integer>
 </resources>
