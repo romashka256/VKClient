@@ -5,89 +5,143 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.client.vk.roma.vkclient.userprofile.view.UserProfileActivity">
 
-    <RelativeLayout
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/vk_clear"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.widget.DrawerLayout
+        android:translationZ="13dp"
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/loadding_fragment"
-        android:background="@color/vk_white"
-        android:visibility="visible"
-        android:translationZ="10dp">
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
 
-        <ProgressBar
-            android:layout_centerInParent="true"
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleLarge"
+        <android.support.design.widget.NavigationView
+           android:translationZ="10dp"
+            android:id="@+id/nav_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_main" >
 
-    <ImageView
-        android:id="@+id/photo_profile_imageView"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:srcCompat="@mipmap/ic_launcher" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/name_profile_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:layout_marginLeft="@dimen/marginLeftUserProfile"
-        android:translationZ="1dp"
-        android:layout_marginTop="183dp" />
+                <include layout="@layout/nav_header_main" />
 
-    <TextView
-        android:id="@+id/is_online_profile_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/name_profile_textView"
-        android:layout_marginLeft="@dimen/marginLeftUserProfile"
-        android:layout_marginTop="2dp"
-        android:translationZ="1dp"
-        android:hint="онлайн" />
-
-    <TextView
-        android:id="@+id/status_profile_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/photo_profile_imageView"
-        android:layout_marginLeft="@dimen/marginLeftUserProfile"
-        android:hint="Жизнь приговор вор мажо" />
-
-    <TextView
-        android:id="@+id/count_profile_friends_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/status_profile_textView"
-        android:layout_marginLeft="@dimen/marginLeftUserProfile"
-        android:hint="48 друзе" />
-
-    <TextView
-        android:id="@+id/count_profile_subscribers_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/count_profile_friends_textView"
-        android:layout_marginLeft="@dimen/marginLeftUserProfile"
-        android:hint="185 подписчико" />
-
-    <TextView
-        android:id="@+id/university_profile_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/count_profile_subscribers_textView"
-        android:layout_marginLeft="@dimen/marginLeftUserProfile" />
+                <ListView
+                    android:id="@+id/lst_menu_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </android.support.design.widget.NavigationView>
 
 
-    <android.support.v7.widget.RecyclerView
-        android:paddingTop="7dp"
-        android:paddingBottom="7dp"
-        android:background="@color/vk_light_color"
-        android:layout_below="@id/university_profile_textView"
-        android:id="@+id/list_of_photos"
-        android:scrollbarThumbHorizontal="@color/vk_black"
-        android:layout_height="150dp"
-        android:layout_width="match_parent"/>
+        <RelativeLayout
+            android:id="@+id/loadding_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/vk_white"
+            android:translationZ="3dp"
+            android:visibility="visible">
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/photo_profile_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/name_profile_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/marginLeftUserProfile"
+                android:layout_marginTop="183dp"
+                android:textSize="30sp"
+                android:translationZ="1dp" />
+
+            <TextView
+                android:id="@+id/is_online_profile_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_profile_textView"
+                android:layout_marginLeft="@dimen/marginLeftUserProfile"
+                android:layout_marginTop="2dp"
+                android:hint="онлайн"
+                android:translationZ="1dp" />
+
+            <TextView
+                android:id="@+id/status_profile_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/photo_profile_imageView"
+                android:layout_marginLeft="@dimen/marginLeftUserProfile"
+                android:hint="Жизнь приговор вор мажо" />
+
+            <TextView
+                android:id="@+id/count_profile_friends_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/status_profile_textView"
+                android:layout_marginLeft="@dimen/marginLeftUserProfile"
+                android:hint="48 друзе" />
+
+            <TextView
+                android:id="@+id/count_profile_subscribers_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/count_profile_friends_textView"
+                android:layout_marginLeft="@dimen/marginLeftUserProfile"
+                android:hint="185 подписчико" />
+
+            <TextView
+                android:id="@+id/university_profile_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/count_profile_subscribers_textView"
+                android:layout_marginLeft="@dimen/marginLeftUserProfile" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_of_photos"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@id/university_profile_textView"
+                android:background="@color/vk_light_color"
+                android:paddingBottom="7dp"
+                android:paddingTop="7dp"
+                android:scrollbarThumbHorizontal="@color/vk_black" />
+        </RelativeLayout>
+    </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>

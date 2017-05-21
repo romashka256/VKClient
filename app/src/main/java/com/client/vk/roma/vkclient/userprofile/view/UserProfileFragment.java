@@ -1,11 +1,19 @@
 package com.client.vk.roma.vkclient.userprofile.view;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -27,7 +35,7 @@ import butterknife.ButterKnife;
  * Created by Roma on 15.05.2017.
  */
 
-public class UserProfileFragment extends Fragment implements IUserProfileView {
+public class UserProfileFragment extends Fragment implements IUserProfileView,NavigationView.OnNavigationItemSelectedListener {
 
     @Bind(R.id.name_profile_textView)
     TextView mNameProfileTextView;
@@ -47,6 +55,12 @@ public class UserProfileFragment extends Fragment implements IUserProfileView {
     RelativeLayout mRelativeProgress;
     @Bind(R.id.list_of_photos)
     RecyclerView mListOfPhotos;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawer;
+    @Bind(R.id.nav_view)
+    NavigationView mNav;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
 
     private UserProfilePresenter presenter;
 
@@ -59,8 +73,6 @@ public class UserProfileFragment extends Fragment implements IUserProfileView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new UserProfilePresenter(this);
-
-
     }
 
     @Override
@@ -68,7 +80,6 @@ public class UserProfileFragment extends Fragment implements IUserProfileView {
         super.onResume();
         presenter.loadInfo();
     }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,8 +87,12 @@ public class UserProfileFragment extends Fragment implements IUserProfileView {
 
         ButterKnife.bind(this, view);
 
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(getActivity(), mDrawer,mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.setDrawerListener(toggle);
+        toggle.syncState();
+
         mListOfPhotos.setHasFixedSize(true);
-        mListOfPhotos.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,true));
+        mListOfPhotos.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
 
         return view;
     }
@@ -86,7 +101,7 @@ public class UserProfileFragment extends Fragment implements IUserProfileView {
     public void onUserProfileLoadedSuccess(User user) {
         mRelativeProgress.setVisibility(View.GONE);
 
-        mListOfPhotos.setAdapter(new ListImagesArrayAdapter(getActivity(),user.getImgUrls()));
+        mListOfPhotos.setAdapter(new ListImagesArrayAdapter(getActivity(), user.getImgUrls()));
 
         Picasso.with(getActivity()).load(user.getPhoto_string()).centerCrop().resize(mPhotoProfileImageView.getMeasuredWidth(), mPhotoProfileImageView.getMeasuredHeight()).into(mPhotoProfileImageView);
         mNameProfileTextView.setText(user.getFirst_name() + " " + user.getLast_name());
@@ -106,5 +121,15 @@ public class UserProfileFragment extends Fragment implements IUserProfileView {
     public void onUserProfileLoading() {
         mRelativeProgress.setVisibility(View.VISIBLE);
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

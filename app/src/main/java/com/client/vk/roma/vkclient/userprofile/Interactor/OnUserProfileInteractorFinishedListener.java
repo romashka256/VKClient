@@ -10,7 +10,7 @@ import org.json.JSONObject;
  */
 
 public interface OnUserProfileInteractorFinishedListener {
-    void onNetworkSuccess(VKApiUser vkApiUserList,JSONObject vkApiFriends,JSONObject vkApiPhotos);
-    void onNetworkLoading();
-    void onNetworkFailure(VKError error);
+    void onUserProfileNetworkSuccess(VKApiUser vkApiUserList, JSONObject vkApiFriends, JSONObject vkApiPhotos);
+    void onUserProfileNetworkLoading();
+    void onUserProfileNetworkFailure(VKError error);
 }

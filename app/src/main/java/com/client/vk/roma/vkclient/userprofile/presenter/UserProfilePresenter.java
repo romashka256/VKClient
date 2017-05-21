@@ -33,18 +33,18 @@ public class UserProfilePresenter implements  IUserProfilePresenter,OnUserProfil
     }
 
     @Override
-    public void onNetworkSuccess(VKApiUser vkApiUserList,JSONObject vkApiFriends,JSONObject vkApiPhotos) {
+    public void onUserProfileNetworkSuccess(VKApiUser vkApiUserList, JSONObject vkApiFriends, JSONObject vkApiPhotos) {
         user = jsonHelper.getUserFromJson(vkApiUserList, vkApiFriends,vkApiPhotos);
         view.onUserProfileLoadedSuccess(user);
     }
 
     @Override
-    public void onNetworkLoading() {
+    public void onUserProfileNetworkLoading() {
         view.onUserProfileLoading();
     }
 
     @Override
-    public void onNetworkFailure(VKError error) {
+    public void onUserProfileNetworkFailure(VKError error) {
         view.onUserProfileLoadedFailure(error);
 
     }

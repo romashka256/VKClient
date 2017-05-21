@@ -3,4 +3,9 @@
     <string name="followers_count_string">подписчиков</string>
     <string name="getFriends_count">друзей</string>
     <integer name="com_vk_sdk_AppId">6019401</integer>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
 </resources>

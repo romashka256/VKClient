@@ -64,19 +64,19 @@ public class UserProfileInterator {
 
                 vkApiUserList = ((VKList<VKApiUser>) response.parsedModel).get(0);
 
-                listener.onNetworkSuccess(vkApiUserList, friendsObject, photosArray);
+                listener.onUserProfileNetworkSuccess(vkApiUserList, friendsObject, photosArray);
             }
 
             @Override
             public void onError(VKError error) {
                 super.onError(error);
-                listener.onNetworkFailure(error);
+                listener.onUserProfileNetworkFailure(error);
             }
 
             @Override
             public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
                 super.onProgress(progressType, bytesLoaded, bytesTotal);
-                listener.onNetworkLoading();
+                listener.onUserProfileNetworkLoading();
             }
         });
     }
