@@ -11,4 +11,5 @@ public interface IUserProfileView {
     void onUserProfileLoadedSuccess(User user);
     void onUserProfileLoadedFailure(VKError error);
     void onUserProfileLoading();
+    void setDataInViews(User user);
 }

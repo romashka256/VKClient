@@ -1,147 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.client.vk.roma.vkclient.userprofile.view.UserProfileActivity">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <android.support.design.widget.AppBarLayout
+    <include
+        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/vk_clear"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
+        android:layout_height="match_parent" />
 
 
-    <android.support.v4.widget.DrawerLayout
-        android:translationZ="13dp"
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        tools:openDrawer="start">
+        app:menu="@menu/activity_main_drawer" >
 
-        <android.support.design.widget.NavigationView
-           android:translationZ="10dp"
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            app:headerLayout="@layout/nav_header_main" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <include layout="@layout/nav_header_main" />
-
-                <ListView
-                    android:id="@+id/lst_menu_items"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-        </android.support.design.widget.NavigationView>
-
-
-        <RelativeLayout
-            android:id="@+id/loadding_fragment"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_of_dialogs"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/vk_white"
-            android:translationZ="3dp"
-            android:visibility="visible">
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/university_profile_textView"
+            android:background="@color/vk_light_color"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp"
+            android:scrollbarThumbHorizontal="@color/vk_black" />
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
-        </RelativeLayout>
+    </android.support.design.widget.NavigationView>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/photo_profile_imageView"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                app:srcCompat="@mipmap/ic_launcher" />
-
-            <TextView
-                android:id="@+id/name_profile_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/marginLeftUserProfile"
-                android:layout_marginTop="183dp"
-                android:textSize="30sp"
-                android:translationZ="1dp" />
-
-            <TextView
-                android:id="@+id/is_online_profile_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/name_profile_textView"
-                android:layout_marginLeft="@dimen/marginLeftUserProfile"
-                android:layout_marginTop="2dp"
-                android:hint="онлайн"
-                android:translationZ="1dp" />
-
-            <TextView
-                android:id="@+id/status_profile_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/photo_profile_imageView"
-                android:layout_marginLeft="@dimen/marginLeftUserProfile"
-                android:hint="Жизнь приговор вор мажо" />
-
-            <TextView
-                android:id="@+id/count_profile_friends_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/status_profile_textView"
-                android:layout_marginLeft="@dimen/marginLeftUserProfile"
-                android:hint="48 друзе" />
-
-            <TextView
-                android:id="@+id/count_profile_subscribers_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/count_profile_friends_textView"
-                android:layout_marginLeft="@dimen/marginLeftUserProfile"
-                android:hint="185 подписчико" />
-
-            <TextView
-                android:id="@+id/university_profile_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/count_profile_subscribers_textView"
-                android:layout_marginLeft="@dimen/marginLeftUserProfile" />
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/list_of_photos"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_below="@id/university_profile_textView"
-                android:background="@color/vk_light_color"
-                android:paddingBottom="7dp"
-                android:paddingTop="7dp"
-                android:scrollbarThumbHorizontal="@color/vk_black" />
-        </RelativeLayout>
-    </android.support.v4.widget.DrawerLayout>
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

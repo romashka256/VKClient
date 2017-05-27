@@ -21,12 +21,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.client.vk.roma.vkclient.Dialog;
 import com.client.vk.roma.vkclient.R;
 import com.client.vk.roma.vkclient.User;
-import com.client.vk.roma.vkclient.userprofile.presenter.ListImagesArrayAdapter;
+import com.client.vk.roma.vkclient.userprofile.Friend;
+import com.client.vk.roma.vkclient.userprofile.presenter.DialogPresenter;
+import com.client.vk.roma.vkclient.userprofile.presenter.FriendsPresenter;
 import com.client.vk.roma.vkclient.userprofile.presenter.UserProfilePresenter;
 import com.squareup.picasso.Picasso;
 import com.vk.sdk.api.VKError;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,7 +40,7 @@ import butterknife.ButterKnife;
  * Created by Roma on 15.05.2017.
  */
 
-public class UserProfileFragment extends Fragment implements IUserProfileView,NavigationView.OnNavigationItemSelectedListener {
+public class UserProfileFragment extends Fragment implements IFriendsView, IDialogsView, IUserProfileView, NavigationView.OnNavigationItemSelectedListener {
 
     @Bind(R.id.name_profile_textView)
     TextView mNameProfileTextView;
@@ -53,6 +58,8 @@ public class UserProfileFragment extends Fragment implements IUserProfileView,Na
     ImageView mPhotoProfileImageView;
     @Bind(R.id.loadding_fragment)
     RelativeLayout mRelativeProgress;
+    @Bind(R.id.list_of_dialogs)
+    RecyclerView mDialogsList;
     @Bind(R.id.list_of_photos)
     RecyclerView mListOfPhotos;
     @Bind(R.id.drawer_layout)
@@ -62,7 +69,9 @@ public class UserProfileFragment extends Fragment implements IUserProfileView,Na
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
-    private UserProfilePresenter presenter;
+    private UserProfilePresenter userProfilePresenter;
+    private DialogPresenter dialogPresenter;
+    private FriendsPresenter friendsPresenter;
 
     public static UserProfileFragment newInstance() {
         UserProfileFragment fragment = new UserProfileFragment();
@@ -72,14 +81,19 @@ public class UserProfileFragment extends Fragment implements IUserProfileView,Na
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new UserProfilePresenter(this);
+        friendsPresenter = new FriendsPresenter(getActivity(), this);
+        dialogPresenter = new DialogPresenter(this);
+        userProfilePresenter = new UserProfilePresenter(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.loadInfo();
+        friendsPresenter.loadFriends();
+        dialogPresenter.loadDialogs();
+        userProfilePresenter.loadInfo();
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -87,9 +101,11 @@ public class UserProfileFragment extends Fragment implements IUserProfileView,Na
 
         ButterKnife.bind(this, view);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(getActivity(), mDrawer,mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(getActivity(), mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.setDrawerListener(toggle);
         toggle.syncState();
+        mDialogsList.setHasFixedSize(true);
+        mDialogsList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         mListOfPhotos.setHasFixedSize(true);
         mListOfPhotos.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
@@ -100,9 +116,24 @@ public class UserProfileFragment extends Fragment implements IUserProfileView,Na
     @Override
     public void onUserProfileLoadedSuccess(User user) {
         mRelativeProgress.setVisibility(View.GONE);
+        setDataInViews(user);
+    }
 
+
+
+    @Override
+    public void onUserProfileLoadedFailure(VKError error) {
+        Toast.makeText(getActivity(), error.errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onUserProfileLoading() {
+        mRelativeProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setDataInViews(User user) {
         mListOfPhotos.setAdapter(new ListImagesArrayAdapter(getActivity(), user.getImgUrls()));
-
         Picasso.with(getActivity()).load(user.getPhoto_string()).centerCrop().resize(mPhotoProfileImageView.getMeasuredWidth(), mPhotoProfileImageView.getMeasuredHeight()).into(mPhotoProfileImageView);
         mNameProfileTextView.setText(user.getFirst_name() + " " + user.getLast_name());
         mFriendsCountProfileTextView.setText(String.format("%d %s", user.getFriends_count(), getString(R.string.getFriends_count)));
@@ -113,17 +144,6 @@ public class UserProfileFragment extends Fragment implements IUserProfileView,Na
     }
 
     @Override
-    public void onUserProfileLoadedFailure(VKError error) {
-        Toast.makeText(getActivity(), error.errorMessage, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onUserProfileLoading() {
-        mRelativeProgress.setVisibility(View.VISIBLE);
-
-    }
-
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
     }
@@ -131,5 +151,37 @@ public class UserProfileFragment extends Fragment implements IUserProfileView,Na
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onDialogsLoadedSuccess(List<Dialog> dialog) {
+        mDialogsList.setAdapter(new ListDialogsArrayAdapter(getActivity(), dialog));
+    }
+
+    @Override
+    public void onDialogLoadFailure(VKError error) {
+        Toast.makeText(getContext(), "Dialog Loading Failed", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onDialogLoading() {
+
+    }
+
+    @Override
+    public void onFriendsLoadedSuccess(Friend friend) {
+
+    }
+
+    @Override
+    public void onFriendsLoadFailure(VKError error) {
+        Toast.makeText(getContext(), "Friends List Loading Failed", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onFriendsLoading() {
+
     }
 }

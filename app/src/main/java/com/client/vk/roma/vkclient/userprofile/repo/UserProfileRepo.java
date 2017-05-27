@@ -1,4 +1,4 @@
-package com.client.vk.roma.vkclient.userprofile.Interactor;
+package com.client.vk.roma.vkclient.userprofile.repo;
 
 import com.client.vk.roma.vkclient.User;
 import com.vk.sdk.api.VKApi;
@@ -16,10 +16,10 @@ import org.json.JSONObject;
  * Created by Roma on 11.05.2017.
  */
 
-public class UserProfileInterator {
+public class UserProfileRepo {
 
     private final String FIELDS = "first_name,last_name,bdate,city,universities,status,followers_count,home_town,photo_200,online";
-    private OnUserProfileInteractorFinishedListener listener;
+    private OnUserProfileRepoFinishedListener listener;
     private VKApiUser vkApiUserList;
     private JSONObject friendsObject;
     private JSONObject photosArray;
@@ -27,7 +27,7 @@ public class UserProfileInterator {
     private User user;
 
 
-    public UserProfileInterator(OnUserProfileInteractorFinishedListener listener) {
+    public UserProfileRepo(OnUserProfileRepoFinishedListener listener) {
         this.listener = listener;
     }
 
