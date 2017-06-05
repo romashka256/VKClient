@@ -2,7 +2,7 @@ package com.client.vk.roma.vkclient.userprofile;
 
 import com.client.vk.roma.vkclient.Dialog;
 import com.client.vk.roma.vkclient.User;
-import com.client.vk.roma.vkclient.userprofile.repo.RequestsForUsersInfoRepo;
+import com.client.vk.roma.vkclient.userprofile.repo.UsersInfoRepo;
 import com.vk.sdk.api.model.VKApiDialog;
 import com.vk.sdk.api.model.VKApiUser;
 import com.vk.sdk.api.model.VKList;
@@ -21,7 +21,7 @@ import java.util.List;
 public class JSONHelper {
     User user = new User();
     List<Dialog> listOfDialogs;
-    RequestsForUsersInfoRepo usersInfoRepo;
+    UsersInfoRepo usersInfoRepo;
     private VKList vkFriendsResponsePriv;
     ArrayList<Friend> friends = new ArrayList<>();
 
@@ -68,7 +68,7 @@ public class JSONHelper {
         return user;
     }
 
-    public List<Dialog> getDialogs(VKList<VKApiDialog> jsonDialogs, RequestsForUsersInfoRepo forUsersInfoRepo) {
+    public List<Dialog> getDialogs(VKList<VKApiDialog> jsonDialogs) {
         ArrayList<Dialog> dialogs = new ArrayList<>();
         listOfDialogs = new ArrayList<>();
 
@@ -81,8 +81,6 @@ public class JSONHelper {
 
             if (!dialogItem.message.title.equals(" ... ")) {
                 dialog.setTitle(dialogItem.message.title);
-            } else {
-                dialog.setName_of_user((forUsersInfoRepo.getNameOfUserById(dialogItem.message.user_id)));
             }
         }
         listOfDialogs.addAll(dialogs);
@@ -111,5 +109,17 @@ public class JSONHelper {
             e.printStackTrace();
         }
         return friends;
+    }
+
+    public String getNameFromJson(VKList name) {
+
+        String fullname= null;
+        try {
+            fullname = name.get(0).fields.getString("first_name");
+            fullname += " " + name.get(0).fields.getString("last_name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return fullname;
     }
 }

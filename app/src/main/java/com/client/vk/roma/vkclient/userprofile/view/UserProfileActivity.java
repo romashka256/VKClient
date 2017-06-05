@@ -53,4 +53,8 @@ public class UserProfileActivity extends SingleFragmentActivity implements IUser
 
 
     }
+
+    @Override
+    public void setDataInViews(User user) {
+    }
 }

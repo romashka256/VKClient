@@ -6,18 +6,18 @@ import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
-import com.vk.sdk.api.model.VKApiUser;
+import com.vk.sdk.api.model.VKList;
 
 /**
  * Created by Roma on 24.05.2017.
  */
 
-public class RequestsForUsersInfoRepo {
+public class UsersInfoRepo {
 
-    VKApiUser vkApiUser;
-    OnRequstsForUsersInfoRepoListener listener;
+    VKList vkApiUser;
+    OnUsersInfoRepoFinishedListener listener;
 
-    public RequestsForUsersInfoRepo(OnRequstsForUsersInfoRepoListener listener) {
+    public UsersInfoRepo(OnUsersInfoRepoFinishedListener listener) {
         this.listener = listener;
     }
 
@@ -30,7 +30,7 @@ public class RequestsForUsersInfoRepo {
             public void onComplete(VKResponse response) {
                 super.onComplete(response);
 
-                vkApiUser = (VKApiUser) response.parsedModel;
+                vkApiUser = (VKList) response.parsedModel;
 
                 listener.onUserNameNetworkSuccess(vkApiUser);
             }
