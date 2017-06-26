@@ -1,4 +1,4 @@
-package com.client.vk.roma.vkclient.userprofile;
+package com.client.vk.roma.vkclient;
 
 import java.util.Date;
 

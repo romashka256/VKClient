@@ -1,8 +1,9 @@
 package com.client.vk.roma.vkclient.userprofile;
 
 import com.client.vk.roma.vkclient.Dialog;
+import com.client.vk.roma.vkclient.Friend;
+import com.client.vk.roma.vkclient.Message;
 import com.client.vk.roma.vkclient.User;
-import com.client.vk.roma.vkclient.userprofile.repo.UsersInfoRepo;
 import com.vk.sdk.api.model.VKApiDialog;
 import com.vk.sdk.api.model.VKApiUser;
 import com.vk.sdk.api.model.VKList;
@@ -21,8 +22,6 @@ import java.util.List;
 public class JSONHelper {
     User user = new User();
     List<Dialog> listOfDialogs;
-    UsersInfoRepo usersInfoRepo;
-    private VKList vkFriendsResponsePriv;
     ArrayList<Friend> friends = new ArrayList<>();
 
     public User getUserFromJson(VKApiUser userJson, JSONObject jsonFriends, JSONObject jsonPhotos) {
@@ -89,8 +88,6 @@ public class JSONHelper {
 
     public List<Friend> getFriends(VKList vkFriendsResponse) {
 
-        vkFriendsResponsePriv = vkFriendsResponse;
-
         JSONObject jsonFriend;
         try {
             for (int i = 0; i < vkFriendsResponse.size(); i++) {
@@ -111,15 +108,32 @@ public class JSONHelper {
         return friends;
     }
 
-    public String getNameFromJson(VKList name) {
+    public String getNameFromJson(JSONObject name) {
 
-        String fullname= null;
+        String fullname = null;
         try {
-            fullname = name.get(0).fields.getString("first_name");
-            fullname += " " + name.get(0).fields.getString("last_name");
+            JSONObject objName = name.getJSONArray("response").getJSONObject(0);
+            fullname = objName.getString("first_name");
+            fullname += " " + objName.getString("last_name");
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return fullname;
+    }
+
+    public List<Message> getDialogFromJson(JSONObject msgArray){
+        List<Message> lstMsg = new ArrayList<>();
+     //   Message
+
+        try {
+            JSONArray jsonArray = msgArray.getJSONObject("response").getJSONArray("items");
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return lstMsg;
     }
 }

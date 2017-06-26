@@ -24,6 +24,7 @@ public class ListImagesArrayAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private LayoutInflater inflater;
     private String[] imageUrls;
 
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.imageview_item_from_list)

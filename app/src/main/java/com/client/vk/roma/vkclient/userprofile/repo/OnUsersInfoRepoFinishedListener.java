@@ -1,6 +1,6 @@
 package com.client.vk.roma.vkclient.userprofile.repo;
 
-import com.vk.sdk.api.model.VKList;
+import org.json.JSONObject;
 
 /**
  * Created by Roma on 24.05.2017.
@@ -8,7 +8,7 @@ import com.vk.sdk.api.model.VKList;
 
 public interface OnUsersInfoRepoFinishedListener {
 
-    String onUserNameNetworkSuccess(VKList UserfullName);
-    String onUserNameNetworkFailure();
+    void onUserNameNetworkSuccess(JSONObject UserfullName);
+    void onUserNameNetworkFailure();
 
 }

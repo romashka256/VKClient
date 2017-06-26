@@ -12,6 +12,7 @@ import java.util.List;
 public interface IDialogsView {
 
     void onDialogsLoadedSuccess(List<Dialog> dialog);
-    void onDialogLoadFailure(VKError error);
-    void onDialogLoading();
+    void onDialogsLoadFailure(VKError error);
+    void onDialogsLoading();
+    void onItemClicked(Dialog dialog);
 }

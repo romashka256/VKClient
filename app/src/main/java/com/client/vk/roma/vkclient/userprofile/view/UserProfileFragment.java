@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,8 +25,8 @@ import android.widget.Toast;
 import com.client.vk.roma.vkclient.Dialog;
 import com.client.vk.roma.vkclient.R;
 import com.client.vk.roma.vkclient.User;
-import com.client.vk.roma.vkclient.userprofile.Friend;
-import com.client.vk.roma.vkclient.userprofile.presenter.DialogPresenter;
+import com.client.vk.roma.vkclient.Friend;
+import com.client.vk.roma.vkclient.userprofile.presenter.DialogsPresenter;
 import com.client.vk.roma.vkclient.userprofile.presenter.FriendsPresenter;
 import com.client.vk.roma.vkclient.userprofile.presenter.UserProfilePresenter;
 import com.squareup.picasso.Picasso;
@@ -70,7 +71,7 @@ public class UserProfileFragment extends Fragment implements IFriendsView, IDial
     Toolbar mToolbar;
 
     private UserProfilePresenter userProfilePresenter;
-    private DialogPresenter dialogPresenter;
+    private DialogsPresenter dialogsPresenter;
     private FriendsPresenter friendsPresenter;
 
     public static UserProfileFragment newInstance() {
@@ -82,7 +83,7 @@ public class UserProfileFragment extends Fragment implements IFriendsView, IDial
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         friendsPresenter = new FriendsPresenter(getActivity(), this);
-        dialogPresenter = new DialogPresenter(this);
+        dialogsPresenter = new DialogsPresenter(this);
         userProfilePresenter = new UserProfilePresenter(this);
     }
 
@@ -90,7 +91,7 @@ public class UserProfileFragment extends Fragment implements IFriendsView, IDial
     public void onResume() {
         super.onResume();
         friendsPresenter.loadFriends();
-        dialogPresenter.loadDialogs();
+        dialogsPresenter.loadDialogs();
         userProfilePresenter.loadInfo();
     }
 
@@ -155,18 +156,26 @@ public class UserProfileFragment extends Fragment implements IFriendsView, IDial
 
     @Override
     public void onDialogsLoadedSuccess(List<Dialog> dialog) {
-        mDialogsList.setAdapter(new ListDialogsArrayAdapter(getActivity(), dialog));
+        mDialogsList.setAdapter(new ListDialogsArrayAdapter(getActivity(), dialog,this));
     }
 
     @Override
-    public void onDialogLoadFailure(VKError error) {
+    public void onDialogsLoadFailure(VKError error) {
         Toast.makeText(getContext(), "Dialog Loading Failed", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
-    public void onDialogLoading() {
+    public void onDialogsLoading() {
 
+    }
+
+    @Override
+    public void onItemClicked(Dialog dialog) {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+
+        Toast.makeText(getContext(),"Clicked",Toast.LENGTH_SHORT).show();
+        dialogsPresenter.onItemClicked(fm,dialog);
     }
 
     @Override
@@ -177,7 +186,6 @@ public class UserProfileFragment extends Fragment implements IFriendsView, IDial
     @Override
     public void onFriendsLoadFailure(VKError error) {
         Toast.makeText(getContext(), "Friends List Loading Failed", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override

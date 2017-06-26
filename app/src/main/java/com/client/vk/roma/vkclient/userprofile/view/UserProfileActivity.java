@@ -34,13 +34,7 @@ public class UserProfileActivity extends SingleFragmentActivity implements IUser
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onUserProfileLoadedSuccess(User user) {
-
     }
 
     @Override

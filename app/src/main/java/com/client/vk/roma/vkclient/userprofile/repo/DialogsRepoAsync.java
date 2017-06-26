@@ -1,5 +1,7 @@
 package com.client.vk.roma.vkclient.userprofile.repo;
 
+import android.os.AsyncTask;
+
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
@@ -14,14 +16,19 @@ import com.vk.sdk.api.model.VKList;
  * Created by Roma on 22.05.2017.
  */
 
-public class DialogRepo {
+public class DialogsRepoAsync extends AsyncTask<Void,Void,Void>{
 
     private OnDialogsRepoFinishedListener listener;
     private VKList<VKApiDialog> vkApiDialogs;
+    private int type;
+    private final int GET_DIALOGS_TYPE = 0;
 
 
-    public DialogRepo(OnDialogsRepoFinishedListener listener) {
+
+
+    public DialogsRepoAsync(int type, OnDialogsRepoFinishedListener listener) {
         this.listener = listener;
+        this.type = type;
     }
 
     public void getDialogs(){
@@ -48,5 +55,15 @@ public class DialogRepo {
                 super.onProgress(progressType, bytesLoaded, bytesTotal);
             }
         });
+    }
+
+    @Override
+    protected Void doInBackground(Void... params) {
+        switch (type){
+            case GET_DIALOGS_TYPE :
+                getDialogs();
+                break;
+        }
+        return null;
     }
 }

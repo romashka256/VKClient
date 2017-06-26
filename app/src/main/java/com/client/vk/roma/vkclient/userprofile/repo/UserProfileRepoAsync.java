@@ -1,6 +1,7 @@
 package com.client.vk.roma.vkclient.userprofile.repo;
 
-import com.client.vk.roma.vkclient.User;
+import android.os.AsyncTask;
+
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
@@ -16,18 +17,18 @@ import org.json.JSONObject;
  * Created by Roma on 11.05.2017.
  */
 
-public class UserProfileRepo {
+public class UserProfileRepoAsync extends AsyncTask<Void, Void, Void> {
 
     private final String FIELDS = "first_name,last_name,bdate,city,universities,status,followers_count,home_town,photo_200,online";
     private OnUserProfileRepoFinishedListener listener;
     private VKApiUser vkApiUserList;
     private JSONObject friendsObject;
     private JSONObject photosArray;
-    private String count;
-    private User user;
+    private final int GET_PROFILE_TYPE = 0;
+    private  int type;
 
-
-    public UserProfileRepo(OnUserProfileRepoFinishedListener listener) {
+    public UserProfileRepoAsync(int type, OnUserProfileRepoFinishedListener listener) {
+        this.type = type;
         this.listener = listener;
     }
 
@@ -79,5 +80,18 @@ public class UserProfileRepo {
                 listener.onUserProfileNetworkLoading();
             }
         });
+    }
+
+    @Override
+    protected Void doInBackground(Void... params) {
+
+        switch (type){
+            case GET_PROFILE_TYPE :
+                getProfileInfo();
+                break;
+        }
+
+
+        return null;
     }
 }

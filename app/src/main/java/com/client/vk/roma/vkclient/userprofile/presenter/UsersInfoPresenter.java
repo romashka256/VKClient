@@ -2,8 +2,9 @@ package com.client.vk.roma.vkclient.userprofile.presenter;
 
 import com.client.vk.roma.vkclient.userprofile.JSONHelper;
 import com.client.vk.roma.vkclient.userprofile.repo.OnUsersInfoRepoFinishedListener;
-import com.client.vk.roma.vkclient.userprofile.repo.UsersInfoRepo;
-import com.vk.sdk.api.model.VKList;
+import com.client.vk.roma.vkclient.userprofile.repo.UsersInfoRepoAsync;
+
+import org.json.JSONObject;
 
 /**
  * Created by Roma on 24.05.2017.
@@ -11,12 +12,14 @@ import com.vk.sdk.api.model.VKList;
 
 public class UsersInfoPresenter implements IUsersInfoPresenter,OnUsersInfoRepoFinishedListener {
 
-    private UsersInfoRepo usersInfoRepo;
+    private UsersInfoRepoAsync usersInfoRepoAsync;
     private JSONHelper helper;
     private String name;
+    private int type;
 
-    public UsersInfoPresenter() {
-        usersInfoRepo = new UsersInfoRepo(this);
+    public UsersInfoPresenter(int type) {
+        this.type = type;
+        usersInfoRepoAsync = new UsersInfoRepoAsync(type,this);
         helper = new JSONHelper();
     }
 
@@ -26,17 +29,18 @@ public class UsersInfoPresenter implements IUsersInfoPresenter,OnUsersInfoRepoFi
 
     @Override
     public void loadNameOfUserById(int id) {
-        usersInfoRepo.getNameOfUserById(id);
+        usersInfoRepoAsync = new UsersInfoRepoAsync(type,this);
+            usersInfoRepoAsync.execute(id);
     }
 
     @Override
-    public String onUserNameNetworkSuccess(VKList vkApiUserFullName) {
+    public void onUserNameNetworkSuccess(JSONObject vkApiUserFullName) {
         name = helper.getNameFromJson(vkApiUserFullName);
-        return name;
     }
 
     @Override
-    public String onUserNameNetworkFailure(){
-        return "Ошибка загрузки имени";
+    public void onUserNameNetworkFailure() {
+        
     }
+
 }

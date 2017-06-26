@@ -19,35 +19,44 @@ import java.util.List;
 
 public class ListDialogsArrayAdapter extends RecyclerView.Adapter<ListDialogsArrayAdapter.ViewHolder> {
 
+
+    private static IDialogsView view;
     private Context context;
     private LayoutInflater inflater;
-    private List<Dialog> mDialogList;
+    private static List<Dialog> mDialogList;
 
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-   public static class ViewHolder extends RecyclerView.ViewHolder {
+        //    @Bind(R.id.dialog_item_dialog_photo)
+        ImageView mPhotoDialog;
+        //    @Bind(R.id.dialog_item_name_dialog)
+        TextView mNameOfDialog;
+        //    @Bind(R.id.dilalog_item_message_from_dialog)
+        TextView mMessageOfDialog;
 
-       //  @Bind(R.id.dialog_item_dialog_photo)
-         ImageView mPhotoDialog;
-     //   @Bind(R.id.dialog_item_name_dialog)
-         TextView mNameOfDialog;
-     //    @Bind(R.id.dilalog_item_message_from_dialog)
-         TextView mMessageOfDialog;
-
-         ViewHolder(View v) {
+        ViewHolder(View v) {
             super(v);
+            v.setOnClickListener(this);
 
             mPhotoDialog = (ImageView) v.findViewById(R.id.dialog_item_dialog_photo);
-             mMessageOfDialog = (TextView) v.findViewById(R.id.dilalog_item_message_from_dialog);
+            mMessageOfDialog = (TextView) v.findViewById(R.id.dilalog_item_message_from_dialog);
             mNameOfDialog = (TextView) v.findViewById(R.id.dialog_item_name_dialog);
 
         }
+
+        @Override
+        public void onClick(View v) {
+            view.onItemClicked(mDialogList.get(getAdapterPosition()));
+        }
     }
 
-     ListDialogsArrayAdapter(Context context, List<Dialog> dialogList) {
+    ListDialogsArrayAdapter(Context context, List<Dialog> dialogList, IDialogsView view) {
         this.context = context;
         this.mDialogList = dialogList;
+        this.view = view;
 
-       // ButterKnife.bind((Activity) context);
+
+        // ButterKnife.bind((Activity) context);
 
         inflater = LayoutInflater.from(context);
     }
