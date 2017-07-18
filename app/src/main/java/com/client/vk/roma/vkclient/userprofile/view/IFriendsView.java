@@ -1,6 +1,6 @@
 package com.client.vk.roma.vkclient.userprofile.view;
 
-import com.client.vk.roma.vkclient.Friend;
+import com.client.vk.roma.vkclient.userprofile.models.Friend;
 import com.vk.sdk.api.VKError;
 
 /**

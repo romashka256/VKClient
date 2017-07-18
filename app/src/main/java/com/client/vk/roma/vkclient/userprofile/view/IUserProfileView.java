@@ -1,6 +1,6 @@
 package com.client.vk.roma.vkclient.userprofile.view;
 
-import com.client.vk.roma.vkclient.User;
+import com.client.vk.roma.vkclient.userprofile.models.User;
 import com.vk.sdk.api.VKError;
 
 /**
@@ -12,4 +12,5 @@ public interface IUserProfileView {
     void onUserProfileLoadedFailure(VKError error);
     void onUserProfileLoading();
     void setDataInViews(User user);
+    void onBackPressed();
 }

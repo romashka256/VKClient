@@ -3,4 +3,5 @@
     <color name="colorPrimary">#fff</color>
     <color name="colorPrimaryDark">#edeef0</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="unreaded_message">#a12525</color>
 </resources>

@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
+
     <ImageView
         android:id="@+id/dialog_item_dialog_photo"
         android:layout_width="wrap_content"
@@ -32,4 +34,17 @@
         android:textSize="12sp"
         android:maxLines="1"
         android:text="TextView" />
+
+
+    <TextView
+        android:layout_marginTop="3dp"
+        android:maxLines="1"
+        android:textSize="12sp"
+        android:id="@+id/last_activity_textview"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="10:42" />
+
+
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.client.vk.roma.vkclient.userprofile.repo;
 
 import android.os.AsyncTask;
 
+import com.client.vk.roma.vkclient.userprofile.repo.listeners.OnUsersInfoRepoFinishedListener;
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKParameters;
@@ -42,6 +43,7 @@ public class UsersInfoRepoAsync extends AsyncTask<Integer, Void, Void> {
                 vkApiUser = response.json;
 
                 listener.onUserNameNetworkSuccess(vkApiUser);
+
             }
 
             @Override
@@ -60,14 +62,18 @@ public class UsersInfoRepoAsync extends AsyncTask<Integer, Void, Void> {
             case GET_USER_NAME_TYPE:
                 getNameOfUserById(params[0]);
                 break;
+
         }
 
         return null;
+
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
-
         super.onPostExecute(aVoid);
+
+
+
     }
 }

@@ -1,9 +1,9 @@
 package com.client.vk.roma.vkclient.userprofile.presenter;
 
-import com.client.vk.roma.vkclient.User;
-import com.client.vk.roma.vkclient.userprofile.repo.OnUserProfileRepoFinishedListener;
+import com.client.vk.roma.vkclient.userprofile.models.User;
+import com.client.vk.roma.vkclient.userprofile.repo.listeners.OnUserProfileRepoFinishedListener;
 import com.client.vk.roma.vkclient.userprofile.repo.UserProfileRepoAsync;
-import com.client.vk.roma.vkclient.userprofile.JSONHelper;
+import com.client.vk.roma.vkclient.JSONHelper;
 import com.client.vk.roma.vkclient.userprofile.view.IUserProfileView;
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.model.VKApiUser;
@@ -33,6 +33,11 @@ public class UserProfilePresenter implements  IUserProfilePresenter,OnUserProfil
     public void loadInfo() {
         profileRepo = new UserProfileRepoAsync(GET_PROFILE_TYPE,this);
         profileRepo.execute();
+    }
+
+    @Override
+    public void onBackPressed() {
+        view.onBackPressed();
     }
 
     @Override

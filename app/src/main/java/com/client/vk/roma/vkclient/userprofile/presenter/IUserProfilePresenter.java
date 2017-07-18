@@ -6,4 +6,5 @@ package com.client.vk.roma.vkclient.userprofile.presenter;
 
 public interface IUserProfilePresenter {
     void loadInfo();
+    void onBackPressed();
 }

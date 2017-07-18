@@ -2,6 +2,7 @@ package com.client.vk.roma.vkclient.userprofile.repo;
 
 import android.os.AsyncTask;
 
+import com.client.vk.roma.vkclient.userprofile.repo.listeners.OnFriendsRepoFinisherListener;
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
